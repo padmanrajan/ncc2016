@@ -25,7 +25,7 @@ Indian Institute of Technology Mandi, India\\
 
 \begin{abstract}
 
-Speaker Diarization is the task of determining {\bf\textit{``who spoke when"}} in a speech recording of an unknown duration that contains an unknown number of speakers. The very unsupervised nature of this task makes it more challenging and demanding for the used features to be highly discriminative across speakers. Popularly used spectrum-related features for speaker diarization take into account merely the magnitude information and do not utilize information embedded in phase due to the complications involved its processing. However, the information contained in phase has been shown beneficial for (mostly supervised) speech tasks, now it is being explored for speaker diarization. In this work, we propose group-delay functions based features for speaker diarization. Group-delay functions are the representations of phase of Fourier spectrum, which overcomes the issues in processing the phase. We present our results on a publicly available meeting corpus. Our experiments demonstrate that the features derived from group-delay functions provide comparable or improved diraization accuracy over and on fusion with the popularly used mel-frequency cepstrum coefficients (MFCC) features. \\
+Speaker Diarization is the task of determining {\bf\textit{``who spoke when"}} in a speech recording of an unknown duration that contains an unknown number of speakers. The very unsupervised nature of this task makes it more challenging and demanding for the used features to be highly discriminative across speakers. Popularly used spectrum-related features for speaker diarization take into account merely the magnitude information and do not utilize information embedded in phase due to the complications involved its processing. However, the information contained in phase has been shown beneficial for (mostly supervised) speech tasks, now it is being explored for speaker diarization. In this work, we propose group-delay functions based features for speaker diarization. Group-delay functions are the representations of phase of Fourier spectrum, which overcomes the issues in processing the phase. Our experiments demonstrate that the features derived from group-delay functions provide comparable or improved diraization accuracy over and on fusion with the popularly used mel-frequency cepstrum coefficients (MFCC) features. We present results on a publicly available meeting corpus. \\
 
 \end{abstract}
 \IEEEpeerreviewmaketitle
@@ -88,33 +88,48 @@ H(\omega) =  \frac{G}{1 - \sum_{k=1}^{k = p} a_k e^{-j\omega k} }
 \label{eq:homega}
 \end{equation}
 
-where p and G represents order of filter and gain respectively. Typical value of p is around $20$. Gain is usually set to unity for normalization purposes. Linear prediction(LP) is used to estimate coefficients of filter, i.e., $a_k$ present in Eq. \ref{eq:homega}. As filter contains only poles, the approximated power spectrum will not have any zero(s) which rules out the problem that were arising earlier in the group-delay computation using Eq. \ref{eq:GDF_com}. Any speech signal can be broken down into two parts namely, minimum phase and all pass components \cite{allPoleGdSid}. One must notice that the aforementioned method pays off the cost of leaving minimum phase part of speech signal to achieve the robust estimation of group-delay function. In the rest of this paper, we refer all-pole model based group-delay function as APGDF.
+where p and G represents order of filter and gain respectively. Typical value of p is around $20$. Gain is usually set to unity for normalization purposes. Linear prediction(LP) is used to estimate coefficients of filter, i.e., $a_k$ present in Eq. \ref{eq:homega}. As filter contains only poles, the approximated power spectrum will not have any zero(s) which rules out the problem that were arising earlier in the group-delay computation using Eq. \ref{eq:GDF_com}. Any speech signal can be broken down into two parts namely, minimum phase and all pass components \cite{allPoleGdSid}. One must notice that the aforementioned method pays off the cost of leaving minimum phase part of speech signal to achieve the robust estimation of group-delay function. In the rest of this paper, we refer all-pole based group-delay function as APGDF.
 
 \section{Information-bottleneck based diarization}
 \label{system}
 
-Information-bottleneck(IB) based approach performs distributional clustering technique introduced in \cite{aIB}. The IB principle states that the clustering representation $C = {c_1,c_2,..,c_K}$ should have a compact representation for input variables $X = {x_1,x_2,..,x_N}$ and also retain maximum possible information about relevance variables $Y$. More formally, IB criterion can be written as follows:
+%{\{c_1,c_2,..,c_K\}}
+
+The IB principle states that input variable $X$ should achieve a compact clustering representation $C$ (bottleneck) and also try to maximize the information retained with respect variable of interest $Y$, i.e., a relevance variable. Formally, IB criterion can be written as follows:
 
 \begin{equation}
 \label{eq:aIB}
 F = I(Y,C) - \frac{1}{\beta}I(X,C) 
 \end{equation} 
 
-here $\beta$ is a Lagrange multiplier which decides trade off between compactness of input variables and information preserved about relevance variables. The mentioned IB criterion is optimized with respect to stochastic mapping $p(c|x)$ and agglomerative information bottleneck(aIB) based clustering is one such greedy method to optimize the mentioned criterion (\cite{aIB}). Algorithm starts with each speech segment $x_i \in X$ considered as a separate cluster, and after that at each iteration, two clusters $c_i$ and $c_j$ are merged such that decrease in IB criterion is minimum. The decrease in IB criterion for merging any two clusters, can be computed using Jenson-Shannon divergence straightforwardly given distribution $p(y|x)$ \cite{aIB2}.
+where $\beta$ decides trade off between compactness achieved for data $X$ and information preserved with respect to $Y$. The mentioned criterion is optimized with respect to stochastic mapping between $C$ and $X$, i.e., $p(c|x)$ . 
+
+The agglomerative-IB (aIB) based diarization algorithm starts with detecting speech/non-speech frames in a given speech recording. Subsequently, speech-segments of fixed length (typically for $2.5$ seconds) are obtained by performing a uniform linear segmentation on the detected speech frames. Most of these speech-segments are more likely to be generated by one speaker, as their length is small. The obtained sequence of speech segments is used to define the input variable $X={\{x_1,x_2,..,x_N\}}$.  After that a Gaussian mixture model(GMM) with shared diagonal covariance is learned such that each component of GMM represent one speech segment. Each component of GMM is considered as relevance variable, i.e., $Y = \{ y_{j}\}$. 
+
+Firstly, every speech segment $x_i \in X$ is tagged as a separate cluster and after that iteratively at each iteration, two clusters $c_i$ and $c_j$ are merged so that the decrease in the value of IB criterion is minimum \cite{aIB2}. The process is repeated until all clusters are merged into one single cluster. The optimal number of clusters is decided based on empirically determined threshold on Normalized mutual information(NMI), which is defined as the fraction of information preserved in clustering representation $C$ about $Y$, out of the total amount of information contained in $X$ about relevance variables $Y$, i.e., $\frac{I(Y,C)}{I(Y,X)}$. The value of NMI decreases monotonically with respect to number of the clusters, and decrease in the value is expected to be higher when more dissimilar clusters (possibly belonging to different speakers) start merging.  Once clustering is over, Viterbi realignment is used to further refine the clustering results and speaker boundaries created initially.
+
 
 %\begin{comment}
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.5\textwidth]{figures/apSpectrum.eps}
-\caption{A speech frame (in the top panel) with its Fourier spectrum(DFT) and spectrum approximation by all-pole model (in the bottom panel).}
+\includegraphics[width=0.5\textwidth,height=10cm]{Images/apSpectrum.eps}
+\caption{ A frame of speech (in the top panel), corresponding magnitude of Fourier spectrum(DFT) and its approximation by all-pole model (in the second panel), modified group-delay function (in third panel) and all pole model based group delay function (in the bottom panel).}
 \label{fig:all-pole}
 \end{figure}
 %\end{comment}
 
-Number of the clusters is decided based on empirically determined threshold on Normalized mutual information(NMI) $\frac{I(Y,C)}{I(Y,X)}$. NMI is the fraction of information preserved in clustering representation $C$ about $Y$, out of the total amount of information contained in $X$ about relevance variables $Y$. As NMI decreases monotonically with number of clusters, and decrease in the value is expected to be higher when more dissimilar clusters (possibly belonging to different speakers) start merging. To apply the aforementioned method to diarization, one has to define $X = {x_i}$, i.e., set of input variables and $Y = {y_j}$ i.e. relevance variables. $X$ is constructed as a set of fixed length speech segments, typically for $2.5$ seconds based on output of voice activity detector. These segments are characterized by a background Gaussian mixture model(GMM) with shared diagonal covariance matrix and all components of GMM consist the set of relevance variables, i.e, $Y$. And the posteriors of each Gaussian component conditioned on speech segments, i.e., $p(y_j|x_i)$ computed using Bayes' rule. After clustering, further initially created speaker boundaries are refined using Viterbi realignment.
 
-\subsection{Feature Analysis : MFCC v/s Group-delay based features}
 
+\section{Feature Analysis and Fusion}
+\label{feature_analysis_and_fusion}
+
+In order to show the 
+
+We perform comparative analysis to show the effectiveness of group-delay based features along with MFCC, as details provided in Section \ref{feature_analysis}. 
+
+
+\subsection{MFCC v/s Group-delay based features}
+\label{feature_analysis}
 In order to show the effectiveness of group-delay based features, i.e., MODGDF and APGDF, we measure Kullback-Leibler (KL) divergence on speech segments, i.e. $X={x_i}$ created to initiate the aIB clustering algorithm. All choose two speech segments among all available segments with in a speech recordings, are divided into inter-speaker and intra-speaker pairs, based on ground-truth of speakers. We computed mean and variance of KL divergence for both intra-speaker and inter-speaker pairs, as depicted in Table.\ref{table:kl-div}. For this task, we select $20$ recordings of different meetings from the entire available AMI meeting corpus used in our experiments. 
 
 
@@ -136,8 +151,8 @@ APGDF         			& 5.5/9.7                & 8.6/11.9        \\ \hline
 
 As it is clearly evident from the results in Table \ref{table:kl-div}, the mean and variance of KL divergence values of intra-speaker and inter-speaker are decreased and increased for both MODGDF and APGDF respectively. Mean and variance of KL divergence for intra-speaker has decreased which potentially indicates the discriminative power of MODGDF and APGDF for speaker information in the IB framework. Additionally, one must also notice that mean and variance of KL divergence for inter-speaker has also slightly increased for MODGDF and APGDF, which further adds on to show their ability to hold speaker information for IB framework based diarization.  
 
-\subsection{Feature fusion : MFCC with Group-delay based features}
-
+\subsection{MFCC with Group-delay based features}
+\label{feature_fusion}
 The IB based diarization system can be easily extended to fuse multiple features. For each feature stream, we learn a separate GMM with equal number of components and every component is aligned with speech segment used to initiate aIB. This enforces unique relationship among the learned GMM for different feature streams. In other words, if $\lbrace F_1,F_2,...,F_N \rbrace$ are the features to fuse, where $N$ is the number of features, than corresponding background model will have components $\lbrace M^{F_{1}},M^{F_{2}},...,M^{F_{N}}\rbrace$ corresponding to every feature stream. And the distribution for $p(y|x)$ can be computed as follows:       
 
 \begin{equation}
@@ -150,7 +165,7 @@ One must notice that features are fused at the level of relevance variables, whi
 %\begin{comment}
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.5\textwidth,height=5.5cm]{figures/newFusionResults.eps}
+\includegraphics[width=0.5\textwidth,height=5.5cm]{Images/newFusionResults.eps}
 \caption{Performance on AMI dataset comparing MFCC and its fusion with MODGDF and APGDF with respect to weight of probabilities used for MODGDF and APGDF features. Fusion weights are mentioned in parentheses.}
 \label{fig:fusionResults}
 \end{figure}
@@ -172,14 +187,14 @@ DER = MISS + FA + SER
 
 where MISS, FA and SER represents  missed speech errors, false alarm speech error, and speaker error (for details on DER see \cite{NIST}). In all the reported results, we have used the ground-truth speech/non-speech labels to drop non-speech segments of the meeting, which let DER indicate the speaker discriminative power more precisely. For optimization of fusion weights, we only look for $10$ values between $0$ and $1$ as shown in Fig. \ref{fig:fusionResults}.
 
-%\begin{comment}
-%\begin{figure}[h]
-%\centering
-%\includegraphics[width=0.5\textwidth,height=5.5cm]{Images/devNtest.png}
-%\caption{Fusion results}
-%\label{fig:fusionResults}
-%\end{figure}
-%\end{comment}
+\begin{comment}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth,height=5.5cm]{Images/devNtest.png}
+\caption{Fusion results}
+\label{fig:fusionResults}
+\end{figure}
+\end{comment}
 
 \subsection{Feature extraction using MODGDF and APGDF}
 

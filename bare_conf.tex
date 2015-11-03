@@ -25,7 +25,7 @@ Indian Institute of Technology Mandi, India\\
 
 \begin{abstract}
 
-Speaker Diarization is the task of determining {\bf\textit{``who spoke when"}} in a speech recording of an unknown duration that contains an unknown number of speakers. The very unsupervised nature of this task makes it more challenging and demanding for the used features to be highly discriminative across speakers. Popularly used spectrum-related features for speaker diarization take into account merely the magnitude information and do not utilize information embedded in phase due to the complications involved its processing. However, the information contained in phase has been shown beneficial for (mostly supervised) speech tasks, now it is being explored for speaker diarization. In this work, we propose group-delay functions based features for speaker diarization. Group-delay functions are the representations of phase of Fourier spectrum, which overcomes the issues in processing the phase. Our experiments demonstrate that the features derived from group-delay functions provide comparable or improved diraization accuracy over and on fusion with the popularly used mel-frequency cepstrum coefficients (MFCC) features. We present results on a publicly available meeting corpus. \\
+changed Speaker Diarization is the task of determining {\bf\textit{``who spoke when"}} in a speech recording of an unknown duration that contains an unknown number of speakers. The very unsupervised nature of this task makes it more challenging and demanding for the used features to be highly discriminative across speakers. Popularly used spectrum-related features for speaker diarization take into account merely the magnitude information and do not utilize information embedded in phase due to the complications involved its processing. However, the information contained in phase has been shown beneficial for (mostly supervised) speech tasks, now it is being explored for speaker diarization. In this work, we propose group-delay functions based features for speaker diarization. Group-delay functions are the representations of phase of Fourier spectrum, which overcomes the issues in processing the phase. Our experiments demonstrate that the features derived from group-delay functions provide comparable or improved diraization accuracy over and on fusion with the popularly used mel-frequency cepstrum coefficients (MFCC) features. We present results on a publicly available meeting corpus. \\
 
 \end{abstract}
 \IEEEpeerreviewmaketitle
@@ -112,7 +112,7 @@ Firstly, every speech segment $x_i \in X$ is tagged as a separate cluster and af
 %\begin{comment}
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.5\textwidth,height=10cm]{Images/apSpectrum.eps}
+\includegraphics[width=0.5\textwidth,height=10cm]{figures/apSpectrum.eps}
 \caption{ A frame of speech (in the top panel), corresponding magnitude of Fourier spectrum(DFT) and its approximation by all-pole model (in the second panel), modified group-delay function (in third panel) and all pole model based group delay function (in the bottom panel).}
 \label{fig:all-pole}
 \end{figure}
@@ -165,7 +165,7 @@ One must notice that features are fused at the level of relevance variables, whi
 %\begin{comment}
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.5\textwidth,height=5.5cm]{Images/newFusionResults.eps}
+\includegraphics[width=0.5\textwidth,height=5.5cm]{figures/newFusionResults.eps}
 \caption{Performance on AMI dataset comparing MFCC and its fusion with MODGDF and APGDF with respect to weight of probabilities used for MODGDF and APGDF features. Fusion weights are mentioned in parentheses.}
 \label{fig:fusionResults}
 \end{figure}

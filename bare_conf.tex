@@ -51,75 +51,84 @@ coefficients (MFCC) features. \\
 \section{Introduction}
 \label{intro}
 
-Developments in processing power has made digitization of large volumes
-of spoken documents like broadcast, meeting, lecture room conversations
+Developments in processing power has made possible the digitization of
+large-volume spoken documents like news broadcasts, meetings, lectures 
 \cite{reviewPaper2,reviewPaper3}. With this digitization, the utility of speaker
 diarization systems has increased tremendously \cite{reviewPaper1,reviewPaper4},
 and the result is a large number of speech applications utilizing speaker
-diarization systems such as information retrieval, speech and speaker indexing,
+diarization systems. These include applications such as information retrieval, 
+speech and speaker indexing,
 document content structuring, speaker recognition in presence of multiple or
 competing speakers and to help in speech-to-text transcription. Two popular
-approaches for speaker diarization are based on HMM-GMM \cite{reviewPaper1} and
-the information-bottleneck(IB) principle \cite{aIB2}. The latter approach
+approaches for speaker diarization are based on hidden Markov models-Gaussian
+mixture models (HMM-GMM) \cite{reviewPaper1} and on
+the information-bottleneck (IB) principle \cite{aIB2}. The latter approach
 presents a non-parametric solution and has computational advantages over the
-earlier approach. Therefore, we focus on the diarization system based on the
-latter approach.  
+earlier approach (cite?). In this paper, we focus on diarization system based on the
+latter.
 
 %\subsection{Related Work}
 In recent years, the scientific community has seen significant amount of work on
 improving features for diarization systems. Broadly this work can be divided
-into three categories based on the focus of work, namely, spatial information
-fusion, robust overlapped speech handling and learning-based features. Spatial
-information fusion based methods exploit the multiple recordings acquired from
+into three categories: (a) spatial information fusion, (b) 
+robust overlapped speech handling and (c) learning-based features. Spatial
+information fusion based methods exploit multiple recordings acquired from
 various channels of a microphone array to obtain a robust feature representation
 \cite{aIB3,aIB4,featAngle,speakerUPM,featSpatial,MDM}. These methods enjoy the
 resultant spatial redundancy and claim to provide complementary features to
-conventionally used MFCC features \cite{MDM}. On the other hand, rest of the
-categories do not make any explicit use of spatial information arising due to
-multiple recordings, rather, make use of single enhanced recording obtained
-after beamforming all available recordings \cite{beamforming}. 
+conventionally used Mel frequency cepstral coefiicients (MFCC) \cite{MDM}.
+\textit{Do these spatial features not use MFCCs or something similar
+eventually? It may be good to clarify this in one sentence.}
+On the other hand, the other two approaches \textit{check this} do not make any explicit use of spatial 
+information, rather, they make use of a single enhanced recording obtained
+after beamforming all available recordings \cite{beamforming}.
+\textit{Why do you say the other two techniques do not use multiple recordings
+or a microphone array? Does beamforming use arrays? We need to specify a better
+distinction here.} 
 
-Next category of methods are motivated by fact that the effective handling of
-overlapped speech is considered to be at the limits of the current state of the
-art of speaker diarization systems \cite{reviewPaper1,featOverLap}. In the same
+The next category of methods are motivated by fact that the effective handling of
+overlapped speech is considered to be at the limits of the current 
+state-of-the-art of speaker diarization systems \cite{reviewPaper1,featOverLap}. In the same
 spirit, authors in \cite{featProsody,featOverLap} have explored long-term
 conversational and prosodic features to detect and handle overlapped speech more
 robustly. Authors in \cite{featSC} have also shown improvements by deriving
-features from representation obtained using convolutive non-negative
-sparse-coding. and the last category of methods advocate the use of features
+features from representations obtained using convolutive non-negative
+sparse-coding. The last category of methods advocate the use of features
 obtained by applying learning-based methods. Authors in \cite{featANN}, have
-proposed an artificial-neural-network based method to learn a feature transform,
+proposed an artificial neural network-based method to learn a feature transform,
 aimed to distinguish segments from different speakers. Similarly, authors in
-\cite{featPCAnLDA} utilize traditionally used principal-component-analysis and
-linear-discriminant-analysis to perform feature selection, both at the initial
-and the final stages of diarization system respectively. With an exception to
+\cite{featPCAnLDA} utilize traditional principal component analysis (PCA) and
+linear discriminant analysis (LDA) to perform feature selection, at the initial
+and the final stages of diarization respectively. With an exception to
 above mentioned categories, authors in \cite{featFilterBank}, have applied
-features derived using filter-bank-slope of magnitude spectrum for speaker
+features derived using filter-bank-slope of the magnitude spectrum for speaker
 diarization, and attributed their success to their ability to emphasize
-formants. 
+formants. \textit{Is your survey complete? What about more classical methods?
+Where does IB come here?}
 
-Feature derived from magnitude such as MFCC are ubiquitously used in various
-speech tasks. On the other hand, use of phase of short-term spectrum is not so
-spread widely, due to additional involved difficulties in their processing.
-However, there has been a significant increase in interest to utilize
-information from phase of short-term Fourier spectrum recently
-\cite{phaseImportantInterspeech14,gdSurvey}. {\textit{Group delay functions}}
-and its variants have been proposed to mitigate difficulties involved in
-processing of the phase of the short-term spectrum. Features derived from
-group-delay functions have shown promise for other speech tasks, and it is now
-explored for speaker diarization \cite{modifiedGD,allPoleGdSid}. 
+Feature derived from magnitude spectrum such as MFCC are ubiquitously used in various
+speech tasks. On the other hand, use of the phase of short-term spectrum is not so
+widespread, due to the difficulties in its processing.
+However, there has been a significant increase in the interest to utilize
+information from the phase spectrum recently
+\cite{phaseImportantInterspeech14,gdSurvey}. Traditionally, \textit{group delay functions}
+and their variants have been used to mitigate difficulties involved in
+processing of the phase. Features derived from
+group delay functions have shown promise for other speech tasks, and here we 
+explore it for speaker diarization \cite{modifiedGD,allPoleGdSid}. 
 
-In this work, we propose to derive features from group-delay functions for
-information-bottleneck based speaker diarization system. The primary objective
-of this work is to demonstrate whether group-delay based features are capable of
-capturing speaker information independently or in context of (an unsupervised
-task) speaker diarization and introduce improvement in the results with or
-without fusion with the existing features. 
+In this work, we use features derived from group delay functions for
+information-bottleneck based \textit{what type of method is IB?} 
+speaker diarization systems. The primary objective
+is to investigate whether group delay based features can be used
+effectively in speaker diarization and if they can supplement magnitude-based
+features.
 
-The remainder of this paper is organized as follows: Section \ref{fe} presents
-group delay functions and briefly discusses difficulties involved in its
-processing. Subsequently, Section \ref{system} introduces IB based diarization
-(used in our experiments), performed feature analysis of group delay based
+\textit{rewrite this}
+The remainder of this paper is organized as follows: section \ref{fe} presents
+group delay functions and briefly discusses difficulties involved in their
+processing. Subsequently, section \ref{system} introduces IB-based diarization
+performed feature analysis of group delay based
 function in context of used system, and fusion with MFCC. In Section
 \ref{experimentsNresults}, we evaluate and discuss the performance of group
 delay-based features for the introduced system on AMI dataset \cite{AMIData}.
@@ -135,83 +144,78 @@ X(\omega) = |X(\omega)| e^{j\theta(\omega)}
 \label{equ:FT}
 \end{equation}     
 where $|X(\omega)|$ and $\theta(\omega)$ refers to magnitude and phase part of
-the spectrum respectively. And the group-delay function is defined as the
-negative derivative of unwrapped phase of Fourier transform, and can be written
+the spectrum respectively. The group delay function is defined as the
+negative derivative of the continuous (i.~e.~unwrapped) phase of Fourier transform, and can be written
 as follows: 
 \begin{equation}
-\tau(\omega) =  - \frac{d}{d\omega} \theta(\omega)
+\tau(\omega) =  - \frac{d}{d\omega} \theta(\omega).
 \label{equ:GDF_def}
 \end{equation}
 
-Multiplication in magnitude domain results in an addition in group-delay domain,
-hence smaller influence by other peaks in proximity. Due to this property,
-group-delay functions achieves higher resolution as clearly evident in (bottom
-panel of the) Fig.\ref{fig:all-pole}. Even very closely spaced (anti)resonance
-peaks are better resolved in group-delay domain and confines resonance
-information to narrow regions around the zero or pole location. The above
-mentioned properties of group-delay functions makes them attractive to derive
-features. However, computation of unwrapped phase of Fourier transform is a
-non-trivial task. One method which bypasses the issues of phase unwrapping by
-using the following expression to compute group-delay function directly (also
-detailed in \cite{gdSurvey}) :
+The high-resolution and additive properties of group delay functions have been
+studied earlier (\cite{yegnaJASA, gdSurvey}). As a result of this, in the
+group delay domain, very closely
+spaced spectral peaks (or valleys) are confined to narrow regions around poles
+(or zeros.) However, computation of unwrapped phase of Fourier transform is a
+non-trivial task. To bypass this, the group delay function can be computed
+directly from the speech signal, without phase unwrapping, as
+\cite{gdDerivationIcassp}:
 
 \begin{equation}
-\tau(\omega) = \frac{X_R(\omega)Y_R(\omega) + X_I(\omega)Y_I(\omega)}{|X(\omega)|^{2}}
+\tau(\omega) = \frac{X_R(\omega)Y_R(\omega) +
+X_I(\omega)Y_I(\omega)}{|X(\omega)|^{2}},
 \label{eq:GDF_com}
 \end{equation}
 
-where $X(\omega)$ and $Y(\omega)$ are the Fourier transforms of speech signal
-$X[n]$ and $Y[n] = nX[n]$. $|X(\omega)|$ represents magnitude of Fourier
-transform. Subscripts $R$ and $I$ in Eq.\ref{eq:GDF_com}, represents real and
+where $y(n) = n x(n)$, and $Y(\omega)$ is its Fourier transform. 
+Subscripts $R$ and $I$ in equation \ref{eq:GDF_com}, represents real and
 imaginary part of Fourier transform respectively. 
 
-Another important issue to notice here is that the proximity of a zero(dip) near
-to unit circle results into very small value of denominator in
-Eq.\ref{eq:GDF_com}, and the formant structure is lost due to spurious peaks in
-the Fourier spectrum. Even excitation source might cause zero(s) to be present
-in proximity to the unit circle. To address the above mentioned issues, the
-\textit{Modified group-delay function}(MODGDF) has been proposed, which can
-computed using the following expression:
+The proximity of a zero (spectral dip) near the
+unit circle results in a very small value of the denominator in
+equation \ref{eq:GDF_com}. This results in spikes of large magntide in the group
+delay spectrum. As a result, the formant information present in the group delay
+spectrum is masked. More details about the behaviour of group delay functions
+can be found in \cite{gdSurvey}.
 
+To address the above mentioned issues, the
+\textit{modified group delay function} (MODGDF) has been proposed
+\cite{modifiedGD}, which can
+computed using the following expression:
 \begin{equation}
-\tau_{m}(\omega) =  sign | \frac{X_R(\omega)Y_R(\omega) + X_I(\omega)Y_I(\omega)}{|S(\omega)|^{2\gamma}} |^{\alpha} 
+\tau_{m}(\omega) =  
+\frac{X_R(\omega)Y_R(\omega) + X_I(\omega)Y_I(\omega)}{|S(\omega)|^2}, 
 \label{eq:MODGDF}
 \end{equation}
-
-$\tau_{m}(\omega)$  is referred as MODGDF and $|S(\omega)|$ is a cepstrally
-smoothed version of $|X(\omega)|$. And parameters $\alpha:(0,1]$ and
-$\gamma:(0,1]$ are used to control its dynamic range. Again, subscripts $R$ and
-$I$, represent real and imaginary part of Fourier transform respectively. 
-
-Another method that advocates the use of group-delay functions is derived using
-parametric all-pole model instead of computing it directly from Discrete Fourier
-Transform (DFT) \cite{allPoleGdSid}. Parameters of all-pole model are optimized
-such that it approximates Fourier spectrum as seen in (bottom panel of) Fig.
-\ref{fig:all-pole}. The used all-pole can be represented as follows: 
-
+where, $|S(\omega)|$ is obtained from $|X(\omega)|$ by cepstral smoothing.
+Features derived from the modified group delay function have been used in
+several speech tasks \cite{modifiedGD}.
+%And parameters $\alpha:(0,1]$ and
+%$\gamma:(0,1]$ are used to control its dynamic range. Again, subscripts $R$ and
+%$I$, represent real and imaginary part of Fourier transform respectively. 
+Another method to overcome the limitations of equation \ref{eq:GDF_com} is to
+derive the group delay function from an all-pole model. Such a parametric
+representation of group delay functions was first described in \cite{yegnaJASA}.
+The parametric model used is
 \begin{equation}
-H(\omega) =  \frac{G}{1 - \sum_{k=1}^{k = p} a_k e^{-j\omega k} }
+H(\omega) =  \frac{G}{1 - \sum_{k=1}^{k = p} a_k e^{-j\omega k}}.
 \label{eq:homega}
 \end{equation}
-
-where p and G represents order of filter and gain respectively. Typical value of
-p is around $20$. Gain is usually set to unity for normalization purposes.
-Linear prediction(LP) is used to estimate coefficients of filter, i.e., $a_k$
-present in Eq. \ref{eq:homega}. As filter contains only poles, the approximated
-power spectrum will not have any zero(s) which rules out the problem that were
-arising earlier in the group-delay computation using Eq. \ref{eq:GDF_com}. Any
-speech signal can be broken down into two parts namely, minimum phase and all
-pass components \cite{allPoleGdSid}. One must notice that the aforementioned
-method pays off the cost of leaving minimum phase part of speech signal to
-achieve the robust estimation of group-delay function. In the rest of this
-paper, we refer all-pole based group-delay function as APGDF.
+Here, $p$ is the model order, and the gain factor $G$ is set to unity. The
+model parameters $a_k$ are estimated by solving the standard Yule-Walker
+equations. As the filter contains only poles, the spectrum $H(\omega)$ will not have any zeros.
+Computing the group delay function from the phase spectrum of $H(\omega)$ will
+not result in spurious peaks, as in equation \ref{eq:GDF_com}. The resulting
+filter is minimum-phase, and thus has some information loss when compared to the
+signal spectrum $X(\omega)$. Features derived from the all-pole group delay
+function have been used earlier for speaker recognition \cite{allPoleGdSid}.
 
 \section{Information-bottleneck based diarization}
 \label{system}
 
 %{\{c_1,c_2,..,c_K\}}
 
-The IB principle states that input variable $X$ should achieve a compact
+The information bottleneck (IB) principle states that input variable $X$ should achieve a compact
 clustering representation $C$ (bottleneck) and also try to maximize the
 information retained with respect to variable of interest $Y$, i.e., a relevance
 variable. Formally, IB criterion can be written as follows:

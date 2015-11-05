@@ -54,57 +54,43 @@ coefficients (MFCC) features. \\
 Developments in processing power has made possible the digitization of
 large-volume spoken documents like news broadcasts, meetings, lectures 
 \cite{reviewPaper2,reviewPaper3}. With this digitization, the utility of speaker
-diarization systems has increased tremendously \cite{reviewPaper1,reviewPaper4},
-and the result is a large number of speech applications utilizing speaker
-diarization systems. These include applications such as information retrieval, 
-speech and speaker indexing,
+diarization systems has increased tremendously because of their applicability to a large 
+number of speech applications \cite{reviewPaper1,reviewPaper4}. These applications 
+include information retrieval, speech and speaker indexing, 
 document content structuring, speaker recognition in presence of multiple or
 competing speakers and to help in speech-to-text transcription. Two popular
 approaches for speaker diarization are based on hidden Markov models-Gaussian
 mixture models (HMM-GMM) \cite{reviewPaper1} and on
-the information-bottleneck (IB) principle \cite{aIB2}. The latter approach
-presents a non-parametric solution and has computational advantages over the
-earlier approach (cite?). In this paper, we focus on diarization system based on the
-latter.
+the information-bottleneck (IB) principle \cite{aIB2}. In this paper, we focus on the IB principle based approach as it presents a non-parametric solution and also has computational advantages over the
+other approach \cite{aIB2}.
 
 %\subsection{Related Work}
 In recent years, the scientific community has seen significant amount of work on
 improving features for diarization systems. Broadly this work can be divided
 into three categories: (a) spatial information fusion, (b) 
 robust overlapped speech handling and (c) learning-based features. Spatial
-information fusion based methods exploit multiple recordings acquired from
-various channels of a microphone array to obtain a robust feature representation
-\cite{aIB3,aIB4,featAngle,speakerUPM,featSpatial,MDM}. These methods enjoy the
-resultant spatial redundancy and claim to provide complementary features to
-conventionally used Mel frequency cepstral coefiicients (MFCC) \cite{MDM}.
-\textit{Do these spatial features not use MFCCs or something similar
-eventually? It may be good to clarify this in one sentence.}
-On the other hand, the other two approaches \textit{check this} do not make any explicit use of spatial 
-information, rather, they make use of a single enhanced recording obtained
-after beamforming all available recordings \cite{beamforming}.
-\textit{Why do you say the other two techniques do not use multiple recordings
-or a microphone array? Does beamforming use arrays? We need to specify a better
-distinction here.} 
+information fusion based methods exploit multiple recordings acquired using a microphone array often 
+referred as multiple-distance-microphones (MDM) \cite{aIB3,aIB4,featAngle,speakerUPM,featSpatial,MDM}. 
+These methods enjoy the resultant spatial redundancy, and claim to provide complementary features to
+conventionally used MFCC features \cite{MDM}. On the other hand, the approaches from the other two categories do not make any explicit use of spatial information arising from MDM. However, they do make use of a single enhanced recording obtained after beamforming multiple recordings obtained from MDM \cite{beamforming}.
 
 The next category of methods are motivated by fact that the effective handling of
 overlapped speech is considered to be at the limits of the current 
 state-of-the-art of speaker diarization systems \cite{reviewPaper1,featOverLap}. In the same
 spirit, authors in \cite{featProsody,featOverLap} have explored long-term
 conversational and prosodic features to detect and handle overlapped speech more
-robustly. Authors in \cite{featSC} have also shown improvements by deriving
-features from representations obtained using convolutive non-negative
-sparse-coding. The last category of methods advocate the use of features
+robustly. Authors in \cite{featSC} have also shown improvements for overlap speech detection and handling 
+using features based on a convolutive non-negative sparse-coding approach. 
+The last category of approaches advocate the use of features
 obtained by applying learning-based methods. Authors in \cite{featANN}, have
-proposed an artificial neural network-based method to learn a feature transform,
+proposed an artificial neural network-based based approach to learn a feature transform,
 aimed to distinguish segments from different speakers. Similarly, authors in
 \cite{featPCAnLDA} utilize traditional principal component analysis (PCA) and
 linear discriminant analysis (LDA) to perform feature selection, at the initial
 and the final stages of diarization respectively. With an exception to
 above mentioned categories, authors in \cite{featFilterBank}, have applied
-features derived using filter-bank-slope of the magnitude spectrum for speaker
-diarization, and attributed their success to their ability to emphasize
-formants. \textit{Is your survey complete? What about more classical methods?
-Where does IB come here?}
+features derived using filter-bank-slope of the magnitude spectrum, and attributed their success to their ability to emphasize
+formants. 
 
 Feature derived from magnitude spectrum such as MFCC are ubiquitously used in various
 speech tasks. On the other hand, use of the phase of short-term spectrum is not so
@@ -117,22 +103,15 @@ processing of the phase. Features derived from
 group delay functions have shown promise for other speech tasks, and here we 
 explore it for speaker diarization \cite{modifiedGD,allPoleGdSid}. 
 
-In this work, we use features derived from group delay functions for
-information-bottleneck based \textit{what type of method is IB?} 
-speaker diarization systems. The primary objective
+In this work, we apply features derived from group delay functions for
+IB based speaker diarization. The primary objective
 is to investigate whether group delay based features can be used
-effectively in speaker diarization and if they can supplement magnitude-based
-features.
-
-\textit{rewrite this}
-The remainder of this paper is organized as follows: section \ref{fe} presents
-group delay functions and briefly discusses difficulties involved in their
-processing. Subsequently, section \ref{system} introduces IB-based diarization
-performed feature analysis of group delay based
-function in context of used system, and fusion with MFCC. In Section
-\ref{experimentsNresults}, we evaluate and discuss the performance of group
-delay-based features for the introduced system on AMI dataset \cite{AMIData}.
-Lastly, Section \ref{conclude} provides conclusion and future work directions.    
+effectively in the context of speaker diarization and if they can supplement magnitude-based
+features. The layout for the remaining paper is as follows: section \ref{fe} introduces
+group delay functions and difficulties involved in their
+processing. Subsequently, section \ref{system} discusses the used IB-based diarization
+system briefly. Next in section \ref{feature_analysis_and_fusion}, we present the performed comparative and fusion analysis on the features derived from group delay functions. Their performance is evaluated 
+in context of the introduced diarization system on the used AMI dataset (\cite{AMIData}) in section \ref{experimentsNresults}. Lastly in section \ref{conclude}, we conclude and also provide directions for future work.    
 
 \section{Group delay functions}
 \label{fe}
@@ -232,25 +211,25 @@ with respect to stochastic mapping between $C$ and $X$, i.e., $p(c|x)$ .
 The agglomerative IB based diarization starts with detecting speech/non-speech
 frames in a given speech recording \cite{aIB2}. Subsequently, fixed length
 (typically for $2.5$ seconds) speech-segments are obtained by performing a
-uniform and linear segmentation only on the detected speech frames. These
-speech-segments are more likely to be generated by one speaker, as their length
+uniform and linear segmentation only on the speech frames detected in previous step. Each of 
+these speech-segments are more likely to be generated by one speaker, as the duration
 is very small. Collectively, these speech segments are used to define the input
 variable $X={\{x_i\}}$. After that a Gaussian mixture model(GMM) with shared
 diagonal covariance is learned such that each component of GMM utilizes data
-from one speech segment only. Each component of the learned GMM is used as a
+from one speech segment only. Each component of the learned GMM is used as one instance of
 relevance variable, i.e., $Y = \{ y_{j}\}$. The above defined $X$ and $Y$ are
-then fed into the algorithm to obtain the clustering representation $C$. 
+then fed into the algorithm to obtain the optimal clustering representation $C$. 
 
 Initially, each speech-segment $x_i \in X$ is a separate cluster, and after that
 at each step, two clusters are iteratively merged so that decrease in the above
 mentioned IB criterion is minimum \cite{aIB2}. The process is repeated until all
-clusters are merged into the one final cluster. The optimal number of clusters
-is decided based on empirically determined threshold on Normalized mutual
+clusters are merged into one cluster finally. The optimal number of clusters
+is decided based on empirically determined threshold for Normalized mutual
 information(NMI), which is defined as the fraction of information preserved in
-clustering representation $C$ about $Y$, out of the total amount of information
+clustering representation $C$ about $Y$ out of the total amount of information
 contained in $X$ about relevance variables $Y$, i.e., $\frac{I(Y,C)}{I(Y,X)}$.
 The value of NMI decreases monotonically with respect to number of the clusters,
-and decrease in the value is expected to be higher when more dissimilar clusters
+and decrease in the NMI value is expected to be higher when more dissimilar clusters
 (possibly belonging to different speakers) start merging.  After clustering
 speech-segments, the Viterbi realignment based on ergodic HMM is used to refine
 the initially created speaker boundaries (for details see \cite{aIB2}).
@@ -269,7 +248,7 @@ group delay function (in the bottom panel).}
 
 
 
-\section{Feature Analysis and Fusion}
+\section{Feature Analysis}
 \label{feature_analysis_and_fusion}
 
 To show the effectiveness of group-delay based features, we compare and fuse

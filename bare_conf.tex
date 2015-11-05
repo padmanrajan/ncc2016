@@ -195,15 +195,52 @@ have been used earlier for speaker recognition \cite{allPoleGdSid}.
 
 %{\{c_1,c_2,..,c_K\}}
 
+Information bottleneck (IB) based diarization is studied in
+\cite{deepuThesis}. The underlying principle is to represent the data $X$ as a
+set of clusters $C$, usually with $|X|>|C|$. The distortion between $X$ and $C$
+is attempted to made minimum. A set of relevance variables $Y$ is used to
+determine the set of clusters $C$. In general, $Y$ represents some meaningful
+representation of the information present in $X$ (in other words, the relevant
+information present in $X$.) In information theoretic terms, the set $C$ 
+should maximize $I(Y,C)$ constrained by
+$I(X,C)$, where $I$ represents the mutual information. This can be achieved by
+maximization of the below criterion:
+\begin{equation}
+\label{eq:aIB}
+F = I(Y,C) - \frac{1}{\beta}I(X,C) 
+\end{equation}
+where $\beta$ is the Lagrange multiplier which represents the tradeoff between
+the information preserved $I(Y,C)$, and the compression achieved $I(X,C)$
+\cite{deepuThesis}. The chosen $Y$ is dependent on the underlying
+application. The IB principle also assumes that the conditional distribution
+$p(y|x)$ is also available (or can be estimated.)
+
+When applied to speaker diarization, the input variabes $X$ are a sequence of
+short-time features extracted from speech frames. $X$ corresponds to
+a uniformly segmented (typically of length 2.5 seconds) sequence of feature
+vectors. The relevance variables $Y$ refer to the components of a Gaussian
+mixture model in the feature vector space, learnt from the input data. The GMM 
+is estimated with a shared
+covariance matrix, and the number of components are dependent on the number of
+segments (described earlier) in the input utterance. The conditional probability
+density $p(y_i|x_j)$ can be determined by determining the contribution of the
+$i$th GMM component to the speech segment $j$ \cite{deepuThesis}.
+
+The segments $X$ are iteratively merged into smaller and smaller number of
+clusters. At each iteration, the goodness of representation of the current
+set of clusters $C$ is
+determined using equation \ref{eq:aIB}. The number of clusters is determined by
+the normalized mutual information $\frac{I(Y,C)}{I(Y,X)}$. This represents the
+fraction of the original mutual infomation that is captured by the current
+cluster representation, and monotonically decreases with the number of clusters.
+
+The diarization algorithm is summarized as follows.
+
 The information bottleneck (IB) principle states that an input variable $X$ should
 achieve a compact clustering representation $C$ (bottleneck) and also try to
 maximize the information retained with respect to variable of interest $Y$,
 i.e., a relevance variable. Formally, the IB criterion can be written as
 follows:
-\begin{equation}
-\label{eq:aIB}
-F = I(Y,C) - \frac{1}{\beta}I(X,C) 
-\end{equation} 
 where $\beta$ decides the tradeoff between compactness achieved for $X$ and
 information preserved with respect to $Y$, and $I$ represents the mutual
 information. 

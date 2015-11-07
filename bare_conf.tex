@@ -104,14 +104,19 @@ processing the phase. Features derived from
 group delay functions have shown promise for other speech tasks, and here we 
 explore it for speaker diarization \cite{modifiedGD,allPoleGdSid}. 
 
-In this work, we propose features derived from group delay functions for
-IB based speaker diarization. The primary objective
-is to investigate whether group delay based features can be used
-effectively in the context of speaker diarization and if they can supplement magnitude-based
-features. The layout for the remaining paper is as follows: section \ref{fe} introduces
-group delay functions and difficulties involved in their
-processing. Subsequently, section \ref{system} discusses the used IB-based diarization
-system briefly. Next in section \ref{feature_analysis_and_fusion}, we present the performed comparative and fusion analysis on the features derived from group delay functions. Their performance is evaluated using publicly AMI meeting corpus (\cite{AMIData}), in context of the introduced diarization system in section \ref{experimentsNresults}. Lastly, section \ref{conclude} provides conclusion and directions for future work.    
+In this work, we propose features derived from group delay functions for IB
+based speaker diarization. The primary objective is to investigate whether group
+delay based features can be used effectively in the context of speaker
+diarization and if they can supplement magnitude-based features. The layout for
+the remaining paper is as follows: section \ref{fe} introduces group delay
+functions and difficulties involved in their processing. Subsequently, section
+\ref{system} discusses the used IB-based diarization system briefly. Next in
+section \ref{feature_analysis_and_fusion}, we present the performed comparative
+and fusion analysis on the features derived from group delay functions. Their
+performance is evaluated using publicly AMI meeting corpus (\cite{AMIData}), in
+context of the introduced diarization system in section
+\ref{experimentsNresults}. Lastly, section \ref{conclude} provides conclusion
+and directions for future work.    
 
 \section{Group delay functions}
 \label{fe}
@@ -226,7 +231,8 @@ The conditional probability density $p(y_i|x_j)$ can be estimated by determining
 the contribution of the $i$th GMM component to the $j$th speech segment
 \cite{deepuThesis}.
 
-The agglomerative IB (aIB) based diaraization is described as follows. At initial stage, each segment $X$ is
+The agglomerative IB (aIB) based diaraization is described as follows. At
+initial stage, each segment $X$ is
 considered as a separate cluster. Subsequently, segments are iteratively merged such that 
 at each iteration, the decrease in the goodness of representation (determined using 
 equation \ref{eq:aIB}) of the current set of clusters $C$ is least. The number of 
@@ -236,14 +242,21 @@ fraction of the original mutual information that is captured by the current clus
 representation, and monotonically decreases with the number of clusters.  The
 normalized mutual information will decrease rapidly when more dissimilar clusters are merged. The
 algorithm finally refines the initial uniform segmentation be performing a
-Viterbi realignment. More details of the algorithm (termed as aIB algorithm)
+Viterbi realignment. More details of the algorithm 
 can be found in \cite{deepuThesis}.
 
 %\begin{comment}
 
 \section{Feature Analysis}
 \label{feature_analysis_and_fusion}
-In order to show the effectiveness of group delay-based features, analysis is performed in following two parts: comparison and fusion analysis, as explained below in section \ref{feature_analysis} and \ref{feature_fusion} respectively. The objective behind the former part of the analysis is to compare the ability of group delay-based features with MFCC features, to capture the speaker information in context of speaker diarization. And the latter part of the analysis is intended to test whether group delay-based features on fusion with MFCC can boost up the overall performance of the speaker diarization system. 
+In order to show the effectiveness of group delay-based features, analysis is
+performed in following two parts: comparison and fusion analysis, as explained
+below in section \ref{feature_analysis} and \ref{feature_fusion} respectively.
+The objective behind the former part of the analysis is to compare the ability
+of group delay-based features with MFCC features, to capture the speaker
+information in context of speaker diarization. The latter part of the
+analysis is intended to test whether group delay-based features on fusion with
+MFCC can boost up the overall performance of the speaker diarization system. 
  
 %\subsection{MFCC v/s Group-delay based features}
 \subsection{Comparison : MFCC and group delay-based features}

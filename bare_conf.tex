@@ -262,7 +262,17 @@ MFCC can boost up the overall performance of the speaker diarization system.
 \subsection{Comparison : MFCC and group delay-based features}
 \label{feature_analysis}
 
-We analyse speech-segments created prior to applying aIB algorithm arising from the input variable $X$. Each speech-segment is modelled using a Gaussian distribution and the covariance matrix is shared across all speech-segments present in the entire speech recording \cite{featFilterBank}). Speech-segments are than divided into two set of pairs, namely, inter-speaker and intra-speaker, based on the available ground-truth label information. Then Kullback-Leibler Divergence (KLD) between the pairs of speech-segments is computed for both the sets \cite{kld}. The mean and variance of KLD computed on randomly selected $20$ speech recordings, are reported in Table \ref{table:kl-div}. 
+We analyse speech segments created prior to applying aIB algorithm arising from
+the input variable $X$.  For this, segments are pooled into two sets, 
+namely, inter-speaker and intra-speaker, based on the available ground-truth 
+label information. Each set is then modelled using a unimodal Gaussian
+distribution with a common covariance matrix \cite{featFilterBank}). 
+Then the Kullback-Leibler divergence (KLD) between pairs of 
+speech segments is computed for both the
+sets \cite{kld}. The mean and variance of KLD computed on randomly selected $20$
+speech recordings, are reported in Table \ref{table:kl-div}. 
+\textit{Can we get it for all segments? 20 may be too less, and statistically
+insignificant.}
 
 \begin{figure}[h]
 \centering
@@ -293,16 +303,35 @@ APGDF         			& 5.5/9.7                & 8.6/11.9        \\ \hline
 created at to initialize the aIB algorithm.}
 \end{table}
 
-The decrease (increase) in the mean of KLD value for intra-speaker (inter-speaker) set for 
-both MODGDF and APGDF suggests that group delay-based feature can capture speaker
-information in context of IB based diarization systems. Additionally, the variance of KLD value for intra-speaker (inter-speaker) set has decreased (increased) which further indicates the better separability achieved by group delay-based features when compared with MFCC features. 
+The decrease (increase) in the mean of KLD value for intra-speaker
+(inter-speaker) set for both MODGDF and APGDF suggests that group delay-based
+feature can capture speaker information in context of IB based diarization
+systems. Additionally, the variance of KLD value for intra-speaker
+(inter-speaker) set has decreased (increased) which further indicates the better
+separability achieved by group delay-based features when compared with MFCC
+features. 
 
 \subsection{Fusion : MFCC with group delay-based features}
 \label{feature_fusion}
-As explained earlier in section \ref{system}, the IB based diarization requires the following: a) the input variable $X$, b) the relevance variable $Y$, and c) the conditional distribution $p(y_i|x_j)$ (as defined above). For example, features to fuse are $m$, and $g$, then input variable $X$ is a trivial fusion of $j^{th}$ speech-segment across features, i.e., $x_j = \{x^{m}_j,x^{g}_j\}$, as the initial segmentation is shared across feature streams. To estimate joint relevance variable (i.e., $y_i = \{ y_i^{m},y_i^{g}\}$), two separate GMMs are learnt for $m$, and $g$ such that, $y_i^{m}$ and $y_i^{g}$ component of GMMs are estimated using $x^{m}_i$ and $x^{g}_i$ ($i^{th}$ speech-segments of the corresponding feature streams) respectively. One to one relationship between components of GMMs across feature streams allows to estimate the conditional probability density $p(y_i|x_j)$ for fusion of two feature streams as follows:
+As explained earlier in section \ref{system}, the IB based diarization requires
+the following: a) the input variable $X$, b) the relevance variable $Y$, and c)
+the conditional distribution $p(y_i|x_j)$ (as defined above). For example, if
+there are two types of features $m$ and $g$, then the input variable $X$ is a
+trivial \textit{why trivial?} fusion of $j^{th}$ speech-segment across features,
+i.e., $x_j = \{x^{m}_j,x^{g}_j\}$, as the initial segmentation is shared across
+feature streams. To estimate joint relevance variable (i.e., $y_i = \{
+y_i^{m},y_i^{g}\}$), two separate GMMs are learnt for $m$, and $g$ such
+that, $y_i^{m}$ and $y_i^{g}$ component of GMMs are estimated using
+$x^{m}_i$ and $x^{g}_i$ ($i^{th}$ speech-segments of the corresponding
+feature streams) respectively. One to one relationship between
+components of GMMs across feature streams allows to estimate the
+conditional probability density $p(y_i|x_j)$ for fusion of two feature
+streams as follows:
 
 \begin{equation}
-p(y_i|x^{m}_j,x^{g}_j) =   p(y_i^{m}|x^{m}_j) W_{m}  +   p(y_i^{g}|x^{g}_j) W_{g}
+%p(y_i|x^{m}_j,x^{g}_j) =   p(y_i^{m}|x^{m}_j) W_{m}  +   p(y_i^{g}|x^{g}_j) W_{g}
+p(y_i|x^{m}_j,x^{g}_j) =   p(y_i^{m}|x^{m}_j) \alpha  +   p(y_i^{g}|x^{g}_j)
+(1-\alpha)
 \label{eq:feat_combs}
 \end{equation}
 

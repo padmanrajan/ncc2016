@@ -26,19 +26,19 @@ padman\}@iitmandi.ac.in}
 
 \begin{abstract}
 
-Speaker Diarization is the task of determining {\bf\textit{``who spoke when"}}
+Speaker diarization is the task of determining {\bf\textit{``who spoke when"}}
 in a speech recording of an unknown duration containing an unknown number of
 speakers. The very unsupervised nature of this task makes it more challenging
-and demanding for the used features to be highly discriminative across speakers.
-Popularly used spectrum-related features for speaker diarization take into
-account merely the magnitude information and do not utilize phase information
-due to the complications involved in its processing. However, the information
-embed in phase has been shown beneficial for (mostly supervised) speech tasks,
-now it is being explored for speaker diarization. In this work, we propose
-group delay functions based features for speaker diarization. Group delay
-functions are the representations of phase of Fourier spectrum, which overcomes
-the issues in processing the phase. We present our experiments and results on a
-publicly available meeting corpus. Our experiments demonstrate that the features
+and demands that the feature representation used be  highly discriminative across 
+speakers.
+Commonly used features based on the short time Fourier transform are usually
+derived from the magnitude spectrum. The short time phase information is usually
+not used due to the complications involved in its processing. However, the information
+embedded in phase has been shown beneficial for many speech tasks, in this
+paper, we explore it for speaker diarization. Two approaches for utilising
+information from the phase, through group delay functions are explored.
+We present our experiments and results on the 
+publicly available AMI meeting corpus. Our experiments demonstrate that the features
 derived from group delay functions provide comparable or improved diraization
 accuracy over and on fusion with the popularly used mel-frequency cepstrum
 coefficients (MFCC) features. \\
@@ -193,7 +193,8 @@ $H(\omega)$ will not result in spurious peaks, as in equation \ref{eq:GDF_com}.
 The resulting filter is minimum-phase, and thus the spectrum $H(\omega)$ in
 equation \ref{eq:homega} has some information loss when compared to the signal
 spectrum $X(\omega)$. Features derived from the all-pole group delay function
-have been used earlier for speaker recognition \cite{allPoleGdSid}. Fig. \ref{fig:all-pole} 
+have been used earlier for speaker recognition \cite{allPoleGdSid}, and are
+termed APGDF. Fig. \ref{fig:all-pole} 
 shows a sample speech frame along with corresponding discrete Fourier transform, MODGDF, and APGDF. 
 
 \section{Information-bottleneck based diarization}
@@ -373,11 +374,14 @@ The performance of the proposed group delay based features for
 speaker diarization is evaluated using publicly available AMI meeting corpus \cite{AMIData}. In
 our experiments, we randomly select 100 meetings out of the total 170 meetings present in
 the corpus. Further, data is divided into two sets, namely, development set ($30\%$) and test set ($70\%$).
-The development set is used to obtain the optimal values of $\beta$ for aIB and in case of
-feature fusion weights as well. And at last, the test set is utilized to asses the performance of various feature streams using optimal weights. The performance measure used in our experiments is Diarization error rate (DER) which can be defined as follows: 
+The development set is used to obtain the optimal values of $\beta$ for aIB and
+in case of feature fusion weights as well. And at last, the test set is utilized
+to asses the performance of various feature streams using optimal weights. The
+performance measure used in our experiments is diarization error rate (DER)
+which can be defined as follows: 
 
 \begin{equation}
-DER = MISS + FA + SER
+\text{DER} = \text{MISS} + \text{FA} + \text{SER}
 \end{equation}
 \begin{comment}
 \begin{equation}

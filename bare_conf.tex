@@ -194,7 +194,7 @@ The resulting filter is minimum-phase, and thus the spectrum $H(\omega)$ in
 equation \ref{eq:homega} has some information loss when compared to the signal
 spectrum $X(\omega)$. Features derived from the all-pole group delay function
 have been used earlier for speaker recognition \cite{allPoleGdSid}. Fig. \ref{fig:all-pole} 
-shows a sample of speech frame along with corresponding discrete Fourier transform, MODGDF, and APGDF. 
+shows a sample speech frame along with corresponding discrete Fourier transform, MODGDF, and APGDF. 
 
 \section{Information-bottleneck based diarization}
 \label{system}
@@ -405,23 +405,20 @@ We perform frame-blocking with $2/3$-overlapping windows of duration 30 ms and i
 multiplied version $Y[n]=nX[n]$.
 \item Cepstrally smooth the $|X(\omega)|$ to estimate $|S(\omega)|$,
 and then plug it into equation \ref{eq:MODGDF} to obtain $\tau_{m}(\omega)$.
-\item Additional MODGDF parameters $\alpha$ and $\gamma$ are resp. set to ....,
-as determined by earlier studies. give ref
-\textit{finish this}
+\item Additional MODGDF parameters $\alpha$ and $\gamma$ are resp. set to $0.4$ and $0.9$,
+as determined by earlier studies. \cite{modifiedGD}
 \end{enumerate}	
 
 \vspace{0.2cm}
 Procedure to compute APGDF can be described as follows:
 \begin{enumerate}
 \item Perform all-pole analysis on speech frame $X[n]$ with prediction order set to
-$p=20$, and estimate coefficients of all-pole filter, i.e., $a(k)$.  
+$p=20$ (also used in \cite{allPoleGdSid}), and estimate coefficients of all-pole filter, i.e., $a(k)$.   
 \item Use G=1 and $a(k)$, to compute the frequency response $H(\omega)$ as defined
 in equation \ref{eq:homega}.
 \item Compute group delay function by taking the negative derivative of
 the phase response of $H(\omega)$. Sample-wise
 difference is used as an approximation to the derivative.
-\item As determined by earlier studied, the parameter p is set to ... give ref
-also
 \end{enumerate}	
 \vspace{0.2cm}
 

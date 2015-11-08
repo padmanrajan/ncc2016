@@ -405,6 +405,9 @@ We perform frame-blocking with $2/3$-overlapping windows of duration 30 ms and i
 multiplied version $Y[n]=nX[n]$.
 \item Cepstrally smooth the $|X(\omega)|$ to estimate $|S(\omega)|$,
 and then plug it into equation \ref{eq:MODGDF} to obtain $\tau_{m}(\omega)$.
+\item Additional MODGDF parameters $\alpha$ and $\gamma$ are resp. set to ....,
+as determined by earlier studies. give ref
+\textit{finish this}
 \end{enumerate}	
 
 \vspace{0.2cm}
@@ -417,12 +420,16 @@ in equation \ref{eq:homega}.
 \item Compute group delay function by taking the negative derivative of
 the phase response of $H(\omega)$. Sample-wise
 difference is used as an approximation to the derivative.
+\item As determined by earlier studied, the parameter p is set to ... give ref
+also
 \end{enumerate}	
 \vspace{0.2cm}
 
-To extract feature from both MODGDF and APGDF, discrete cosine transform is applied, and the first $18$ coefficients (excluding the zeroth one) are utilized as the feature representation for further processing. Additional parameters involved in MODGDF, and APGDF computation ($\alpha =
-0.9$, $\gamma=0.4$ and $p=20$) are directly taken from the earlier studies on speech
-and speaker recognition \cite{modifiedGD,allPoleGdSid}. We do not perform search for the optimal value of these parameters as it requires computationally intensive experimentations, and the fact that the motivation of this work is to show the capability of group delay-based features and not to obtain the best performance. 
+To extract feature from both MODGDF and APGDF, discrete cosine transform is applied, and the first $18$ coefficients (excluding the zeroth one) are utilized as the feature representation for further processing. 
+%Additional parameters involved in MODGDF, and APGDF computation ($\alpha =
+%0.9$, $\gamma=0.4$ and $p=20$) are directly taken from the earlier studies on speech
+%and speaker recognition \cite{modifiedGD,allPoleGdSid}.
+We do not perform search for the optimal value of these parameters as it requires computationally intensive experimentations, and the fact that the motivation of this work is to show the capability of group delay-based features and not to obtain the best performance. 
 
 %\begin{comment}
 \begin{table}[h]

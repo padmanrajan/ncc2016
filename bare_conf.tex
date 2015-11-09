@@ -13,13 +13,22 @@
 
 \title{Group Delay Functions for Speaker Diarization}
 
+%\author{
+%\IEEEauthorblockN{{ Mohit Yadav, Anil K Sao, A D Dileep and Padmanabhan Rajan}\\
+%Indian Institute of Technology Mandi\\ 
+%\  {\small \tt mohit\_yadav@students.iitmandi.ac.in \& \{anil, addileep and
+%padman\}@iitmandi.ac.in}
+%}
+%}
+
 \author{
-\IEEEauthorblockN{{ Mohit Yadav, Anil K Sao, A D Dileep and Padmanabhan Rajan}\\
-Indian Institute of Technology Mandi\\ 
-\  {\small \tt mohit\_yadav@students.iitmandi.ac.in \& \{anil, addileep and
-padman\}@iitmandi.ac.in}
+\IEEEauthorblockN{{ Mohit Yadav$^{1,2}$, Anil K Sao$^{2}$, A D Dileep$^{2}$ and Padmanabhan Rajan$^{2}$}\\
+TCS Research New Delhi, India$^{1}$ \\ 
+Indian Institute of Technology Mandi, India$^{2}$ \\ 
+\  {\small \tt y.mohit@tcs.com \& \{anil, addileep and padman\}@iitmandi.ac.in}
 }
 }
+
 
 \maketitle
 
@@ -39,7 +48,7 @@ paper, we explore it for speaker diarization. Two approaches for utilising
 information from the phase, through group delay functions are explored.
 We present our experiments and results on the 
 publicly available AMI meeting corpus. Our experiments demonstrate that the features
-derived from group delay functions provide comparable or improved diraization
+derived from group delay functions provide comparable or improved diarization
 accuracy over and on fusion with the popularly used mel-frequency cepstrum
 coefficients (MFCC) features. \\
 
@@ -61,8 +70,8 @@ include information retrieval, speech and speaker indexing,
 document content structuring, speaker recognition in presence of multiple or
 competing speakers and to help in speech-to-text transcription. Two popular
 approaches for speaker diarization are based on hidden Markov models-Gaussian
-mixture models (HMM-GMM) \cite{reviewPaper1} and on
-the information-bottleneck (IB) principle \cite{aIB2}. In this paper, we focus on the IB principle based approach as it presents a non-parametric solution and also has computational advantages over the
+mixture models (HMM-GMM) and on
+the information-bottleneck (IB) principle \cite{reviewPaper1,aIB2}. In this paper, we focus on the IB principle based approach as it presents a non-parametric solution and also has computational advantages over the
 other approach \cite{aIB2}.
 
 %\subsection{Related Work}
@@ -137,7 +146,7 @@ as follows:
 \end{equation}
 
 The high-resolution and additive properties of group delay functions have been
-studied earlier (\cite{yegnaJASA, gdSurvey}). As a result of this, in the
+studied earlier \cite{yegnaJASA, gdSurvey}. As a result of this, in the
 group delay domain, very closely
 spaced spectral peaks (or valleys) are confined to narrow regions around poles
 (or zeros.) However, computation of unwrapped phase of Fourier transform is a
@@ -157,7 +166,7 @@ imaginary part of Fourier transform respectively.
 
 The proximity of a zero (spectral dip) near the
 unit circle results in a very small value of the denominator in
-equation \ref{eq:GDF_com}. This results in spikes of large magntide in the group
+equation \ref{eq:GDF_com}. This results in spikes of large magnitude in the group
 delay spectrum. As a result, the formant information present in the group delay
 spectrum is masked. More details about the behaviour of group delay functions
 can be found in \cite{gdSurvey}.
@@ -194,8 +203,7 @@ The resulting filter is minimum-phase, and thus the spectrum $H(\omega)$ in
 equation \ref{eq:homega} has some information loss when compared to the signal
 spectrum $X(\omega)$. Features derived from the all-pole group delay function
 have been used earlier for speaker recognition \cite{allPoleGdSid}, and are
-termed APGDF. Fig. \ref{fig:all-pole} 
-shows a sample speech frame along with corresponding discrete Fourier transform, MODGDF, and APGDF. 
+termed APGDF. A speech frame along with its discrete Fourier transform, MODGDF, and APGDF is shown in Fig.\ref{fig:all-pole}. 
 
 \section{Information-bottleneck based diarization}
 \label{system}
@@ -233,7 +241,7 @@ The conditional probability density $p(y_i|x_j)$ can be estimated by determining
 the contribution of the $i$th GMM component to the $j$th speech segment
 \cite{deepuThesis}.
 
-The agglomerative IB (aIB) based diaraization is described as follows. At
+The agglomerative IB (aIB) based diarization is described as follows. At
 initial stage, each segment $X$ is
 considered as a separate cluster. Subsequently, segments are iteratively merged such that 
 at each iteration, the decrease in the goodness of representation (determined using 
@@ -267,7 +275,7 @@ MFCC can boost up the overall performance of the speaker diarization system.
 We analyse speech segments created prior to applying aIB algorithm arising from
 the input variable $X$.  For this, segments are pooled into two sets, 
 namely, inter-speaker and intra-speaker, based on the available ground-truth 
-label information. Each set is then modelled using a unimodal Gaussian
+label information. Each set is then modelled using a uni-modal Gaussian
 distribution with a common covariance matrix \cite{featFilterBank}. 
 Then the Kullback-Leibler divergence (KLD) between pairs of 
 speech segments is computed for both the
@@ -291,7 +299,6 @@ based on all pole model (in the bottom panel).}
 \begin{table}[h]
 \centering
 
-\label{table:kl-div}
 \begin{tabular}{|l|l|l|}
 \hline
 Feature 			& Intra-speaker 			& Inter-speaker 	 \\ \hline
@@ -303,6 +310,8 @@ APGDF         			& 5.5/9.7                & 8.6/11.9        \\ \hline
 \vspace{0.4cm}
 \caption{KL divergence for both inter-speaker and intra-speaker speech segments
 created at to initialize the aIB algorithm.}
+
+\label{table:kl-div}
 \end{table}
 
 The decrease (increase) in the mean of KLD value for intra-speaker
@@ -320,10 +329,8 @@ As explained earlier in section \ref{system}, the IB based diarization requires
 the following: a) the input variable $X$, b) the relevance variable $Y$, and c)
 the conditional distribution $p(y_i|x_j)$ (as defined above). For example, if
 there are two types of features $m$ and $g$, then the input variable $X$ is a
-trivial 
-%\textit{why trivial?} 
-fusion of $j^{th}$ speech segment across features,
-i.e., $x_j = \{x^{m}_j,x^{g}_j\}$, as the initial segmentation is shared across
+trivial fusion of $j^{th}$ speech segment across features,
+i.e., $x_j = \{x^{m}_j,x^{g}_j\}$, because of fact that the initial segmentation is shared across
 feature streams. To estimate joint relevance variable (i.e., $y_i = \{
 y_i^{m},y_i^{g}\}$), two separate GMMs are learnt for $m$, and $g$ such
 that, $y_i^{m}$ and $y_i^{g}$ component of GMMs are estimated using
@@ -355,10 +362,9 @@ $g$ respectively. In our case, feature $m$ is MFCC and feature $g$ is either of
 MODGDF or APGDF. Performance of various features and their fusion with respect
 to parameter $\theta$ is depicted in Fig. \ref{fig:fusionResults}. The fusion
 results show improvements in diarization error with increase in $\theta$, which
-indicates that group delay-based feature has value when used in supplement with
-MFCC features. However, furthermore increase in $\theta$ leads to deterioration
-of the overall performance the diarization system, as visible in Fig.
-\ref{fig:fusionResults}.   
+indicates that group delay-based feature as a supplement to MFCC features has potential. 
+However, further increase in $\theta$ leads to deterioration
+of performance for the overall diarization system as in Fig.\ref{fig:fusionResults}.   
 
 
 %% Following paragraph is commented out, please ignore
@@ -420,7 +426,7 @@ multiplied version $Y[n]=nX[n]$.
 \item Cepstrally smooth the $|X(\omega)|$ to estimate $|S(\omega)|$,
 and then plug it into equation \ref{eq:MODGDF} to obtain $\tau_{m}(\omega)$.
 \item Additional MODGDF parameters $\alpha$ and $\gamma$ are respectively set to $0.4$ and $0.9$,
-as determined by earlier studies. \cite{modifiedGD}
+as determined in \cite{modifiedGD}.
 \end{enumerate}	
 
 \vspace{0.2cm}
@@ -446,7 +452,6 @@ We do not perform search for the optimal value of these parameters as it require
 %\begin{comment}
 \begin{table}[h]
 \centering
-\label{my-label}
 \begin{tabular}{|l|l|l|}
 \hline
 Feature stream  & Development Set & Test Set \\ \hline
@@ -457,10 +462,11 @@ MFCC + MODGDF(0.8, 0.2) & 18.5          & 20.1            \\ \hline
 MFCC + APGDF(0.6, 0.4)  & 16.2          & 18.7            \\ \hline
 \end{tabular}
 \vspace{0.4cm}
-\label{table:results}
+
 \caption{Diarization error obtained on AMI dataset comparing various feature
 streams and their combinations. In case of fusion, optimum weights are mentioned
 in parentheses.}
+\label{table:results}
 \end{table}
 %\end{comment}
 
@@ -480,8 +486,7 @@ improve the performance of the current diarization systems, as the relative
 improvements of $23.5\%$ and $28.9\%$ by MFCC + MODGDF and MFCC + APGDF have
 been observed respectively.
 
-The optimal fusion weights for MFCC + MODGDF and MFCC + APGDF are found
-(0.8,0.2) and (0.6,0.4) respectively. We suspect that the relatively lesser
+The optimal weights found for the fusions of MFCC + MODGDF and MFCC + APGDF are (0.8,0.2) and (0.6,0.4) respectively. We suspect that the relatively lesser
 improvements provided by MODGDF when compared to APGDF, are due to fact that its
 computation critically depends on $\alpha$ and $\gamma$ parameters and search
 for their optimal values have been avoided.  Results in Fig.
@@ -496,14 +501,14 @@ In this work, we investigate group delay based features for IB based
 diarization. Both with and without model based techniques, namely,
 MODGDF and APGDF are used to estimate group delay function and derive features for diarization. 
 We found that features computed using MODGDF and APGDF provide better diarization error rate. 
-Furthermore, these features has yielded a significant improvement in the diarization accuracy 
+Furthermore, these features yields a significant improvement in the diarization accuracy 
 on fusion with MFCC. 
 
 In future, it will be interesting to further investigate their ability in
 more complex scenarios, e.g., for handling overlapped speech and speech/non-speech
-detection at early stage of a diarization system. Additionally, the fusion study of
+detection in the early stage of the diarization system. Additionally, the fusion study of
 other spectral and time domain features with group delay based features appears
-a reasonable direction to explore further. 
+a reasonable direction to explore. 
 
 \bibliographystyle{IEEEbib}
 \bibliography{bare_conf}

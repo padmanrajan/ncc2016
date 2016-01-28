@@ -2,6 +2,7 @@
 \ifCLASSINFOpdf
 \else
 \fi
+\IEEEoverridecommandlockouts
 \usepackage{flushend}
 \usepackage{graphicx}
 \usepackage{amssymb,amsmath,bm}
@@ -23,7 +24,7 @@
 %}
 
 \author{
-\IEEEauthorblockN{{ Mohit Yadav$^{1,2}$, Anil K Sao$^{2}$, A D Dileep$^{2}$ and Padmanabhan Rajan$^{2}$}\\
+\IEEEauthorblockN{{ Mohit Yadav$^{1, 2, \ddagger  }$ \thanks{ $\ddagger$ This work was done while first author was a student at Indian Institute of Technology Mandi, India.}, Anil Kumar Sao$^{2}$, A D Dileep$^{2}$ and Padmanabhan Rajan$^{2}$}\\
 TCS Research New Delhi, India$^{1}$ \\ 
 Indian Institute of Technology Mandi, India$^{2}$ \\ 
 \  {\small \tt y.mohit@tcs.com \& \{anil, addileep and padman\}@iitmandi.ac.in}
@@ -72,7 +73,7 @@ document content structuring, speaker recognition in presence of multiple or
 competing speakers and to help in speech-to-text transcription. Two popular
 approaches for speaker diarization are based on hidden Markov models-Gaussian
 mixture models (HMM-GMM) and on
-the information-bottleneck (IB) principle \cite{reviewPaper1,aIB2}. In this paper, we focus on the IB principle based approach as it presents a non-parametric solution and also has computational advantages over the
+the information-bottleneck principle \cite{reviewPaper1,aIB2}. In this paper, we focus on the IB principle based approach as it presents a non-parametric solution and also has computational advantages over the
 other approach \cite{aIB2}.
 
 %\subsection{Related Work}
@@ -114,18 +115,18 @@ processing the phase. Features derived from
 group delay functions have shown promise for other speech tasks, and here we 
 explore it for speaker diarization \cite{modifiedGD,allPoleGdSid}. 
 
-In this work, we propose features derived from group delay functions for IB
+In this work, we propose features derived from group delay functions for information-bottleneck (IB)
 based speaker diarization. The primary objective is to investigate whether group
 delay based features can be used effectively in the context of speaker
 diarization and if they can supplement magnitude-based features. The layout for
 the remaining paper is as follows: section \ref{fe} introduces group delay
 functions and difficulties involved in their processing. Subsequently, section
 \ref{system} discusses the used IB-based diarization system briefly. Next in
-section \ref{feature_analysis_and_fusion}, we present the performed comparative
-and fusion analysis on the features derived from group delay functions. Their
-performance is evaluated using publicly AMI meeting corpus (\cite{AMIData}), in
+section \ref{feature_analysis_and_fusion}, we present comparative
+and fusion analysis performed on the features derived from group delay functions. Their
+performance is evaluated using publicly available AMI meeting corpus (\cite{AMIData}), in
 context of the introduced diarization system in section
-\ref{experimentsNresults}. Lastly, section \ref{conclude} provides conclusion
+\ref{experimentsNresults}. Lastly, section \ref{conclude} provides conclusions
 and directions for future work.    
 
 \section{Group delay functions}
@@ -211,7 +212,7 @@ termed APGDF. A speech frame along with its discrete Fourier transform, MODGDF, 
 
 %{\{c_1,c_2,..,c_K\}}
 
-Information bottleneck (IB) based diarization is studied in
+Information-bottleneck (IB) based diarization is studied in
 \cite{deepuThesis}. The underlying principle is to represent the data $X$ as a
 set of clusters $C$, usually with $|X|>|C|$. The distortion between $X$ and $C$
 is attempted to made minimum. A set of relevance variables $Y$ is used to
@@ -226,17 +227,17 @@ maximization of the below criterion:
 F = I(Y,C) - \frac{1}{\beta}I(X,C) 
 \end{equation}
 where $\beta$ is the Lagrange multiplier which represents the tradeoff between
-the information preserved $I(Y,C)$, and the compression achieved $I(X,C)$
+the information preserved about $Y$, and the compression achieved for data $X$
 \cite{deepuThesis}. The choice of $Y$ can vary with the underlying
 application. The IB principle also assumes that the conditional distribution
-$p(y|x)$ is also available (or can be estimated.)
+$p(y|x)$ is available (or can be estimated.)
 
 When applied to speaker diarization, the input variables $X$ are sequences of
 short-time features extracted from speech frames. $X$ corresponds to a uniformly
 segmented (typically of length 2.5 seconds) sequence of feature vectors. The
 relevance variables $Y$ refer to the components of a Gaussian mixture model in
 the feature vector space, learnt from the entire input speech recording. The GMM is
-estimated with a shared covariance matrix, and the number of components are
+estimated with a shared co-variance matrix, and the number of components are
 dependent on the number of segments (described earlier) in the input utterance.
 The conditional probability density $p(y_i|x_j)$ can be estimated by determining
 the contribution of the $i$th GMM component to the $j$th speech segment
@@ -252,7 +253,7 @@ information, i.e., $\frac{I(Y,C)}{I(Y,X)}$. This represents the
 fraction of the original mutual information that is captured by the current cluster
 representation, and monotonically decreases with the number of clusters.  The
 normalized mutual information will decrease rapidly when more dissimilar clusters are merged. The
-algorithm finally refines the initial uniform segmentation be performing a
+algorithm finally refines the initial uniform segmentation by performing a
 Viterbi realignment. More details of the algorithm 
 can be found in \cite{deepuThesis}.
 
@@ -261,7 +262,7 @@ can be found in \cite{deepuThesis}.
 \section{Feature Analysis}
 \label{feature_analysis_and_fusion}
 In order to show the effectiveness of group delay-based features, analysis is
-performed in following two parts: comparison and fusion analysis, as explained
+performed in following two parts: a) comparison and b) fusion, as explained
 below in section \ref{feature_analysis} and \ref{feature_fusion} respectively.
 The objective behind the former part of the analysis is to compare the ability
 of group delay-based features with MFCC features, to capture the speaker
@@ -277,7 +278,7 @@ We analyse speech segments created prior to applying aIB algorithm arising from
 the input variable $X$.  For this, segments are pooled into two sets, 
 namely, inter-speaker and intra-speaker, based on the available ground-truth 
 label information. Each set is then modelled using a uni-modal Gaussian
-distribution with a common covariance matrix \cite{featFilterBank}. 
+distribution with a common co-variance matrix \cite{featFilterBank}. 
 Then the Kullback-Leibler divergence (KLD) between pairs of 
 speech segments is computed for both the
 sets \cite{kld}. The mean and variance of KLD computed on randomly selected $20$
@@ -315,13 +316,12 @@ created at to initialize the aIB algorithm.}
 \label{table:kl-div}
 \end{table}
 
-The decrease (increase) in the mean of KLD value for intra-speaker
-(inter-speaker) set for both MODGDF and APGDF suggests that group delay-based
+The smaller (higher) in the mean of KLD value for intra-speaker
+(inter-speaker) set for both MODGDF and APGDF (when compared with MFCC) suggests that group delay-based
 feature can capture speaker information in context of IB based diarization
 systems. Additionally, the variance of KLD value for intra-speaker
-(inter-speaker) set has decreased (increased) which further indicates the better
-separability achieved by group delay-based features when compared with MFCC
-features. 
+(inter-speaker) set is smaller (higher) which also indicates higher speaker
+separability, achieved by group delay-based features. 
 
 \subsection{Fusion : MFCC with group delay-based features}
 \label{feature_fusion}
@@ -389,7 +389,7 @@ diarization is evaluated using the publicly available AMI meeting corpus
 total 170 meetings present in the corpus. Further, the data is divided into two
 sets, namely, development set ($30\%$) and test set ($70\%$).  The development
 set is used to obtain the optimal values of $\beta$ for aIB and the
-feature fusion weights. The test set is utilized to asses
+feature fusion weights. The test set is utilized to assess
 the performance of various feature streams using optimal weights. The
 performance measure used in our experiments is diarization error rate (DER)
 which can be defined as follows: 
@@ -403,7 +403,7 @@ which can be defined as follows:
 \end{equation}
 \end{comment}
 
-where MISS, FA and SER represents  missed speech, false alarm speech, and speaker error (for details on DER, see \cite{NIST}). The overlap speech is also included in calculation of the results, for all the experiments presented in this work. 
+where MISS, FA and SER represents  missed speech, false alarm speech, and speaker error (for details on DER, see \cite{NIST}). The overlap speech is also included in calculation of the results, for all the experiments presented in this paper. 
 
 \begin{comment}
 \begin{figure}[h]
@@ -448,7 +448,7 @@ To extract features from both MODGDF and APGDF, discrete cosine transform is app
 %Additional parameters involved in MODGDF, and APGDF computation ($\alpha =
 %0.9$, $\gamma=0.4$ and $p=20$) are directly taken from the earlier studies on speech
 %and speaker recognition \cite{modifiedGD,allPoleGdSid}.
-We do not perform search for the optimal value of these parameters as it requires computationally intensive experimentations, and the fact that the motivation of this work is to show the capability of group delay-based features and not to obtain the best performance. 
+We do not perform search for the optimal value of these parameters as it requires computationally intensive experiments, and the fact that the motivation of this work is to show the capability of group delay-based features and not to obtain the best performance. 
 
 %\begin{comment}
 \begin{table}[h]
@@ -490,7 +490,7 @@ been observed respectively.
 The optimal weights found for the fusions of MFCC + MODGDF and MFCC + APGDF are (0.8,0.2) and (0.6,0.4) respectively. We suspect that the relatively lesser
 improvements provided by MODGDF when compared to APGDF, are due to fact that its
 computation critically depends on $\alpha$ and $\gamma$ parameters and search
-for their optimal values have been avoided.  Results in Fig.
+for their optimal values has been avoided.  Results in Fig.
 \ref{fig:fusionResults} show that MODGDF or APGDF on fusion with MFCC
 outperforms any individual feature by itself, which suggests that these
 feature can supplement MFCC feature for IB based speaker diarization.
@@ -501,11 +501,9 @@ feature can supplement MFCC feature for IB based speaker diarization.
 In this work, we investigate group delay based features for IB based
 diarization. Both with and without model based techniques, namely,
 MODGDF and APGDF are used to estimate group delay function and derive features for diarization. 
-We found that features computed using MODGDF and APGDF provide better diarization error rate. 
-Furthermore, these features yields a significant improvement in the diarization accuracy 
-on fusion with MFCC. 
+We found that features computed using MODGDF and APGDF provide higher diarization accuracy and also yields a significant improvement on fusion with MFCC. 
 
-In future, it will be interesting to further investigate their ability in
+In future, it will be interesting to investigate their ability in
 more complex scenarios, e.g., for handling overlapped speech and speech/non-speech
 detection in the early stage of the diarization system. Additionally, the fusion study of
 other spectral and time domain features with group delay based features appears
